@@ -1,7 +1,13 @@
 '''
+A simple gRPC server implementation for a TodoService. 
+This server provides basic CRUD operations for managing a 
+list of todo items.
 
 python -m grpc_tools.protoc -I./protos --python_out=. --pyi_out=. --grpc_python_out=. ./protos/simple1.proto
 
+
+see:
+https://github.com/grpc/grpc/blob/master/examples/python/helloworld/async_greeter_server.py
 
 '''
 
