@@ -1,0 +1,81 @@
+from google.protobuf.internal import containers as _containers
+from google.protobuf import descriptor as _descriptor
+from google.protobuf import message as _message
+from collections.abc import Iterable as _Iterable, Mapping as _Mapping
+from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class Todo(_message.Message):
+    __slots__ = ("id", "name", "done")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    DONE_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    name: str
+    done: bool
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., done: bool = ...) -> None: ...
+
+class CreateTodoRequest(_message.Message):
+    __slots__ = ("name", "done")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    DONE_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    done: bool
+    def __init__(self, name: _Optional[str] = ..., done: bool = ...) -> None: ...
+
+class CreateTodoResponse(_message.Message):
+    __slots__ = ("todo",)
+    TODO_FIELD_NUMBER: _ClassVar[int]
+    todo: Todo
+    def __init__(self, todo: _Optional[_Union[Todo, _Mapping]] = ...) -> None: ...
+
+class GetTodoRequest(_message.Message):
+    __slots__ = ("id",)
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    def __init__(self, id: _Optional[int] = ...) -> None: ...
+
+class GetTodoResponse(_message.Message):
+    __slots__ = ("todo",)
+    TODO_FIELD_NUMBER: _ClassVar[int]
+    todo: Todo
+    def __init__(self, todo: _Optional[_Union[Todo, _Mapping]] = ...) -> None: ...
+
+class UpdateTodoRequest(_message.Message):
+    __slots__ = ("id", "name", "done")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    DONE_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    name: str
+    done: bool
+    def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., done: bool = ...) -> None: ...
+
+class UpdateTodoResponse(_message.Message):
+    __slots__ = ("todo",)
+    TODO_FIELD_NUMBER: _ClassVar[int]
+    todo: Todo
+    def __init__(self, todo: _Optional[_Union[Todo, _Mapping]] = ...) -> None: ...
+
+class DeleteTodoRequest(_message.Message):
+    __slots__ = ("id",)
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    def __init__(self, id: _Optional[int] = ...) -> None: ...
+
+class DeleteTodoResponse(_message.Message):
+    __slots__ = ("success",)
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: bool = ...) -> None: ...
+
+class ListTodosRequest(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class ListTodosResponse(_message.Message):
+    __slots__ = ("todos",)
+    TODOS_FIELD_NUMBER: _ClassVar[int]
+    todos: _containers.RepeatedCompositeFieldContainer[Todo]
+    def __init__(self, todos: _Optional[_Iterable[_Union[Todo, _Mapping]]] = ...) -> None: ...
