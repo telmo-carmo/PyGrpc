@@ -13,7 +13,8 @@ https://github.com/grpc/grpc/blob/master/examples/python/helloworld/async_greete
 
 import grpc
 from concurrent import futures
-import time, logging, argparse
+#import time
+import logging, argparse
 import simple1_pb2
 import simple1_pb2_grpc
 
@@ -83,7 +84,10 @@ class TodoService(simple1_pb2_grpc.TodoServiceServicer):
         return simple1_pb2.DeleteTodoResponse(success=False)
 
     def ListTodos(self, request, context):
+        for key, value in context.invocation_metadata():
+            logger.warning("Received initial metadata: key=%s value=%s" % (key, value))
         logger.info(f"List all Todos #%d" ,len(self.todos.values()))
+        #context.set_trailing_metadata([("metadata-2", "The Greatest Metadata 2")])
         return simple1_pb2.ListTodosResponse(todos=list(self.todos.values()))
 
 def serve():
@@ -102,11 +106,12 @@ def serve():
     server.add_insecure_port('[::]:{}'.format(args.port))
     server.start()
     logger.info('TodoService server started on port %s', args.port)
-    try:
-        while True:
-            time.sleep(86400)
-    except KeyboardInterrupt:
-        server.stop(0)
+    server.wait_for_termination()
+    # try:
+    #     while True:
+    #         time.sleep(86400)
+    # except KeyboardInterrupt:
+    #     server.stop(0)
 
 if __name__ == '__main__':
     serve()

@@ -37,7 +37,11 @@ def main():
         print("Updated Todo:", update_response.todo)
 
         # List all Todos
-        list_response = stub.ListTodos(simple1_pb2.ListTodosRequest())
+        list_response = stub.ListTodos(simple1_pb2.ListTodosRequest(),
+            metadata=[
+                ("metadata-1", "The Greatest Metadata 1"),
+                ('accesstoken', 'GRPC-Client-Token-12345')]
+        )
         print("All Todos:", list_response.todos)
 
         # Delete the Todo
