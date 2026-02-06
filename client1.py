@@ -1,10 +1,27 @@
-
+import argparse
 import grpc
 import simple1_pb2
 import simple1_pb2_grpc
 
 def main():
-    with grpc.insecure_channel('localhost:50051') as channel:
+    parser = argparse.ArgumentParser(description="gRPC TodoService Client")
+    parser.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        default=50051,
+        nargs="?",
+        help="The port on which the server listens.",
+    )
+    parser.add_argument(
+        "--host",
+        type=str, 
+        default="localhost", 
+        help="The server host to connect to.") 
+
+    args = parser.parse_args()
+
+    with grpc.insecure_channel(f'{args.host}:{args.port}') as channel:
         stub = simple1_pb2_grpc.TodoServiceStub(channel)
 
         # Create a Todo

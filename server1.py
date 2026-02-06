@@ -7,7 +7,7 @@ python -m grpc_tools.protoc -I./protos --python_out=. --pyi_out=. --grpc_python_
 
 import grpc
 from concurrent import futures
-import time, logging
+import time, logging, argparse
 import simple1_pb2
 import simple1_pb2_grpc
 
@@ -77,15 +77,25 @@ class TodoService(simple1_pb2_grpc.TodoServiceServicer):
         return simple1_pb2.DeleteTodoResponse(success=False)
 
     def ListTodos(self, request, context):
-        logger.info(f"List all Todos #{len(self.todos.values())}")
+        logger.info(f"List all Todos #%d" ,len(self.todos.values()))
         return simple1_pb2.ListTodosResponse(todos=list(self.todos.values()))
 
 def serve():
+    parser = argparse.ArgumentParser(description="gRPC TodoService Server")
+    parser.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        default=50051,
+        nargs="?",
+        help="The port on which the server will listen.",
+    )
+    args = parser.parse_args()
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     simple1_pb2_grpc.add_TodoServiceServicer_to_server(TodoService(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:{}'.format(args.port))
     server.start()
-    logger.info('TodoService server started on port 50051')
+    logger.info('TodoService server started on port %s', args.port)
     try:
         while True:
             time.sleep(86400)
