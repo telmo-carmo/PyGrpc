@@ -169,4 +169,5 @@ cython_debug/
 .vscode/
 uv.lock
 
+__pycache__
 
