@@ -1,5 +1,6 @@
-import argparse
+import argparse, random
 import grpc
+from datetime import datetime
 import simple1_pb2
 import simple1_pb2_grpc
 
@@ -39,8 +40,8 @@ def main():
         # List all Todos
         list_response = stub.ListTodos(simple1_pb2.ListTodosRequest(),
             metadata=[
-                ("metadata-1", "The Greatest Metadata 1"),
-                ('accesstoken', 'GRPC-Client-Token-12345')]
+                ("metadata-1", datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3] ),
+                ('accesstoken', 'GRPC-Client-Token-{}'.format(random.randint(1000, 9999)))]
         )
         print("All Todos:", list_response.todos)
 
